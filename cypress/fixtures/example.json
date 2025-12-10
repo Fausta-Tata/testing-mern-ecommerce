@@ -1,0 +1,34 @@
+{
+  "validUser": {
+    "name": "karina",
+    "email": "karina11@gmail.com",
+    "password": "Karinaa1234",
+    "confirmPassword": "Karinaa1234"
+  },
+  "existingEmail": {
+    "name": "karinayaw",
+    "email": "karina11@gmail.com",
+    "password": "Karinaa1235",
+    "confirmPassword": "Karinaa1235"
+  },
+  "invalidPassword": {
+    "name": "karina",
+    "email": "karina13@gmail.com",
+    "password": "1234567",
+    "confirmPassword": "1234567"
+  },
+  "mismatchPassword": {
+    "name": "karina",
+    "email": "karina15@gmail.com",
+    "password": "Karinaa1234",
+    "confirmPassword": "1234Karinaa"
+  },
+  "loginValid": {
+    "email": "karina11@gmail.com",
+    "password": "Karinaa1234"
+  },
+  "loginInvalid": {
+    "email": "karina11@gmail.com",
+    "password": "1234Karinaa"
+  }
+}

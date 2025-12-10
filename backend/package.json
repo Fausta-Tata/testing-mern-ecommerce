@@ -6,8 +6,15 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "seed":"node seed/seed.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "seed": "node seed/seed.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:run:chrome": "cypress run --browser chrome",
+    "cy:run:firefox": "cypress run --browser firefox",
+    "cy:run:auth": "cypress run --spec 'cypress/e2e/user-authentication.cy.js'",
+    "cy:run:headed": "cypress run --headed",
+    "test:e2e": "start-server-and-test 'npm run dev' http://localhost:3000 'npm run cy:run'"
   },
   "keywords": [],
   "author": "",

@@ -78,46 +78,73 @@ exports.login=async(req,res)=>{
     }
 }
 
-exports.verifyOtp=async(req,res)=>{
-    try {
-        // checks if user id is existing in the user collection
-        const isValidUserId=await User.findById(req.body.userId)
+exports.verifyOtp = async (req, res) => {
+  try {
+    // ✅ TAMBAHKAN INI DI PALING ATAS
+    // Fixed OTP untuk testing environment
+    if (process.env.NODE_ENV === 'development' && req.body.otp === '123456') {
+      const isValidUserId = await User.findById(req.body.userId);
+      
+      if (!isValidUserId) {
+        return res.status(404).json({ 
+          message: 'User not Found' 
+        });
+      }
 
-        // if user id does not exists then returns a 404 response
-        if(!isValidUserId){
-            return res.status(404).json({message:'User not Found, for which the otp has been generated'})
-        }
+      // Delete existing OTP
+      await Otp.deleteMany({ user: isValidUserId._id });
 
-        // checks if otp exists by that user id
-        const isOtpExisting=await Otp.findOne({user:isValidUserId._id})
+      // Mark user as verified
+      const verifiedUser = await User.findByIdAndUpdate(
+        isValidUserId._id,
+        { isVerified: true },
+        { new: true }
+      );
 
-        // if otp does not exists then returns a 404 response
-        if(!isOtpExisting){
-            return res.status(404).json({message:'Otp not found'})
-        }
-
-        // checks if the otp is expired, if yes then deletes the otp and returns response accordinly
-        if(isOtpExisting.expiresAt < new Date()){
-            await Otp.findByIdAndDelete(isOtpExisting._id)
-            return res.status(400).json({message:"Otp has been expired"})
-        }
-        
-        // checks if otp is there and matches the hash value then updates the user verified status to true and returns the updated user
-        if(isOtpExisting && (await bcrypt.compare(req.body.otp,isOtpExisting.otp))){
-            await Otp.findByIdAndDelete(isOtpExisting._id)
-            const verifiedUser=await User.findByIdAndUpdate(isValidUserId._id,{isVerified:true},{new:true})
-            return res.status(200).json(sanitizeUser(verifiedUser))
-        }
-
-        // in default case if none of the conidtion matches, then return this response
-        return res.status(400).json({message:'Otp is invalid or expired'})
-
-
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({message:"Some Error occured"})
+      return res.status(200).json({
+        ...sanitizeUser(verifiedUser),
+        message: 'OTP verified (test mode)'
+      });
     }
-}
+    // ✅ SAMPAI SINI
+
+    // ORIGINAL CODE - JANGAN DIUBAH
+    const isValidUserId = await User.findById(req.body.userId);
+
+    if (!isValidUserId) {
+      return res.status(404).json({ 
+        message: 'User not Found, for which the otp has been generated' 
+      });
+    }
+
+    const isOtpExisting = await Otp.findOne({ user: isValidUserId._id });
+
+    if (!isOtpExisting) {
+      return res.status(404).json({ message: 'Otp not found' });
+    }
+
+    if (isOtpExisting.expiresAt < new Date()) {
+      await Otp.findByIdAndDelete(isOtpExisting._id);
+      return res.status(400).json({ message: "Otp has been expired" });
+    }
+
+    if (isOtpExisting && (await bcrypt.compare(req.body.otp, isOtpExisting.otp))) {
+      await Otp.findByIdAndDelete(isOtpExisting._id);
+      const verifiedUser = await User.findByIdAndUpdate(
+        isValidUserId._id,
+        { isVerified: true },
+        { new: true }
+      );
+      return res.status(200).json(sanitizeUser(verifiedUser));
+    }
+
+    return res.status(400).json({ message: 'Otp is invalid or expired' });
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Some Error occured" });
+  }
+};
 
 exports.resendOtp=async(req,res)=>{
     try {

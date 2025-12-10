@@ -1,0 +1,20 @@
+# Gunakan image Node.js versi ringan
+FROM node:18-alpine
+
+# Set folder kerja di dalam container
+WORKDIR /app
+
+# Copy file package.json dulu (biar cache efisien)
+COPY package*.json ./
+
+# Install dependencies backend
+RUN npm install
+
+# Copy sisa kode backend
+COPY . .
+
+# Expose port backend (sesuaikan dengan port index.js kamu, biasanya 5000)
+EXPOSE 5000
+
+# Perintah untuk menjalankan backend
+CMD ["npm", "start"]
