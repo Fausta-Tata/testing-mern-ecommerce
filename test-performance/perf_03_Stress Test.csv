@@ -1,0 +1,3 @@
+Label,# Samples,Average,Min,Max,Std. Dev.,Error %,Throughput,Received KB/sec,Sent KB/sec,Avg. Bytes
+Get All Products (Stress),284397,348,0,254392,7806.01,98.916%,836.01425,2804.88,1.10,3435.6
+TOTAL,284397,348,0,254392,7806.01,98.916%,836.01425,2804.88,1.10,3435.6
