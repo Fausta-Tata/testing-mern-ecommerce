@@ -1,4 +1,4 @@
-## 🧪 Instruksi Pengujian (Testing Instructions)
+## Instruksi Pengujian (Testing Instructions)
 
 Sebelum menjalankan *test script*, harap lakukan konfigurasi akun berikut:
 
@@ -20,6 +20,6 @@ Untuk menjalankan pengujian fitur Admin, gunakan akun berikut:
 
 ---
 
-### ⚠️ Catatan Penting (Known Issues)
+### Catatan Penting (Known Issues)
 Saat ini, *test script* untuk Admin belum sepenuhnya valid/stabil karena masih dalam tahap pengembangan.
 * Untuk melihat hasil pengujian yang dimaksud atau status terkini, silakan merujuk pada **file Excel** yang telah dilampirkan dalam repositori ini.
