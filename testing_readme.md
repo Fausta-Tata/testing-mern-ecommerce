@@ -98,9 +98,8 @@ Output: - Video: `cypress/videos/`\
   ---------------- ----------------------- -----------------------
   Script Cypress   `/cypress/e2e/`         Tes fungsional
   Data Dummy       `/cypress/fixtures/`    Data user & produk
-  Script JMeter    `/tests/performance/`   File `.jmx` load test
-  Video Bukti      `/cypress/videos/`      Rekaman tes
-  Laporan HTML     `/cypress/reports/`     Hasil tes
+  Laporan      `/test-document`     Test Report & Test Plan
+  
 
 > Pastikan port **3000** dan **8000** tidak dipakai aplikasi lain untuk
 > menghindari konflik.
